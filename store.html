@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Page</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .store-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .store-button {
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .store-button:hover {
+            background-color: #45a049;
+        }
+
+        .points-counter {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="store-container">
+        <button class="store-button" onclick="deductPoints()">Snack 1</button>
+        <button class="store-button" onclick="deductPoints()">Snack 2</button>
+        <button class="store-button" onclick="deductPoints()">Snack 3</button>
+        <button class="store-button" onclick="deductPoints()">Snack 4</button>
+        <button class="store-button" onclick="deductPoints()">Snack 5</button>
+        <button class="store-button" onclick="deductPoints()">Snack 6</button>
+    </div>
+
+    <div class="points-counter">
+        Points: <span id="points">300</span>
+    </div>
+
+    <script>
+        var points = 300;
+
+        function deductPoints() {
+            if (points >= 50) {
+                points -= 50;
+                document.getElementById('points').textContent = points;
+            } else {
+                alert("Not enough points!");
+            }
+        }
+    </script>
+</body>
+
+</html>
