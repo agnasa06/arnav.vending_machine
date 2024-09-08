@@ -12,53 +12,252 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            width: 100vw;
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: transparent;
+            background-image: url('https://cdn.dribbble.com/users/504316/screenshots/20258850/34763_smokefree_vet_quit_forgood_vendingmachine_600x800.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
 
         .store-container {
+            position: absolute;
+            left: 10%;
+            top: 8%;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 5vw;
+            row-gap: 8vh;
+            margin-bottom: 50px;
+        }
+
+        .store-button,
+        .store-button *,
+        .store-button :after,
+        .store-button :before,
+        .store-button:after,
+        .store-button:before {
+            border: 0 solid;
+            box-sizing: border-box;
         }
 
         .store-button {
-            padding: 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 7vh;
+            width: 10vw;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-appearance: button;
+            background-color: #cecece;
+            background-image: none;
+            color: #000;
             cursor: pointer;
-            text-align: center;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+                Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+                Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+            font-size: calc(0.8vw + 0.8vh);
+            font-weight: 900;
+            line-height: 1.5;
+            margin: 0;
+            -webkit-mask-image: -webkit-radial-gradient(#cecece, #000);
+            padding: 0;
+            border-radius: 10px;
+            border: .1vh solid;
+            transition: transform 0.1s;
         }
 
         .store-button:hover {
-            background-color: #45a049;
+            transform: scale(1.02);
+        }
+
+        .store-button:disabled {
+            cursor: default;
+        }
+
+        .store-button:-moz-focusring {
+            outline: auto;
+        }
+
+        .store-button svg {
+            display: block;
+            vertical-align: middle;
+        }
+
+        .store-button [hidden] {
+            display: none;
+        }
+
+        .store-button {
+            border: .1vh solid;
+            display: block;
+            overflow: hidden;
+            padding: 2vh 5vw;
+            position: relative;
+            text-align: center;
+
+        }
+
+        .store-button .new,
+        .store-button .old span {
+            font-weight: 900;
+            transition: transform 0.2s;
+        }
+
+        .store-button .new {
+            position: absolute;
+            left: 30%;
+            top: 20%;
+            transform: scale(0);
+
+        }
+
+        .store-button:hover .new {
+            position: absolute;
+            left: 30%;
+            top: 20%;
+            transform: scale(1);
+        }
+
+        .store-button .old,
+        .store-button .old span {
+            inset: 0;
+            position: absolute;
+        }
+
+        .store-button .old span {
+            background: #000;
+            color: #fff;
+            display: block;
+            display: grid;
+            place-items: center;
+        }
+
+        .store-button .old span:first-child {
+            -webkit-clip-path: polygon(0 0, 51% 0, 51% 100%, 0 100%);
+            clip-path: polygon(0 0, 51% 0, 51% 100%, 0 100%);
+        }
+
+        .store-button .old span:nth-child(2) {
+            -webkit-clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+            clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+        }
+
+        .store-button:hover .old span:first-child {
+            transform: translateY(-100%);
+        }
+
+        .store-button:hover .old span:nth-child(2) {
+            transform: translateY(100%);
         }
 
         .points-counter {
-            font-size: 24px;
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            font-size: 4vh;
             font-weight: bold;
+            color: white;
+        }
+
+        .square1 {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .square {
+            position: absolute;
+            left: 72%;
+            top: 23%;
+            height: 65vh;
+            width: 25vw;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            border: 2px solid #3498db;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Arial', sans-serif;
+            color: #333333;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .square:hover {
+            transform: scale(1.01);
+            /* Slightly enlarges on hover for interactivity */
+            background-color: #f0f0f0;
+            /* Light grey background on hover */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            /* More intense shadow on hover */
+        }
+
+        #square3 {
+            top: 12%;
+            height: 10vh;
+            border: 2px solid #0060a0;
         }
     </style>
 </head>
 
 <body>
-    <div class="store-container">
-        <button class="store-button" onclick="deductPoints()">Snack 1</button>
-        <button class="store-button" onclick="deductPoints()">Snack 2</button>
-        <button class="store-button" onclick="deductPoints()">Snack 3</button>
-        <button class="store-button" onclick="deductPoints()">Snack 4</button>
-        <button class="store-button" onclick="deductPoints()">Snack 5</button>
-        <button class="store-button" onclick="deductPoints()">Snack 6</button>
-    </div>
+    <div class="square1"></div>
+    <div class="square"></div>
+    <div class="square" id="square3">
 
+    </div>
     <div class="points-counter">
         Points: <span id="points">300</span>
     </div>
+    <div class="store-container">
+        <button class="store-button" onclick="deductPoints()">
+            <div class="new">Select?</div>
+            <div class="old">
+                <span>Oreos</span>
+                <span>Oreos</span>
+            </div>
+        </button>
+        <button class="store-button" onclick="deductPoints()">
+            <div class="new">Select?</div>
+            <div class="old">
+                <span>Doritoes</span>
+                <span>Doritoes</span>
+            </div>
+        </button><button class="store-button" onclick="deductPoints()">
+            <div class="new">Select?</div>
+            <div class="old">
+                <span>Chips Ahoy</span>
+                <span>Chips Ahoy</span>
+            </div>
+        </button><button class="store-button" onclick="deductPoints()">
+            <div class="new">Select?</div>
+            <div class="old">
+                <span>Cheetos</span>
+                <span>Cheetos</span>
+            </div>
+        </button><button class="store-button" onclick="deductPoints()">
+            <div class="new">Select?</div>
+            <div class="old">
+                <span>Cheez It</span>
+                <span>Cheez It</span>
+            </div>
+        </button><button class="store-button" onclick="deductPoints()">
+            <div class="new">Select?</div>
+            <div class="old">
+                <span>Sanity from coding HTML</span>
+                <span>Sanity from coding HTML</span>
+            </div>
+        </button>
+    </div>
+
 
     <script>
         var points = 300;
