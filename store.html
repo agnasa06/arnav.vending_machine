@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Store Page</title>
     <style>
+        /* Body styles to center content and set background */
         body {
             display: flex;
             flex-direction: column;
@@ -23,7 +24,8 @@
             background-attachment: fixed;
         }
 
-        .store-container {
+        /* Grid layout for buttons */
+        .store-buttons {
             position: absolute;
             left: 10%;
             top: 8%;
@@ -34,6 +36,7 @@
             margin-bottom: 50px;
         }
 
+        /* General button styles */
         .store-button,
         .store-button *,
         .store-button :after,
@@ -70,14 +73,17 @@
             transition: transform 0.1s;
         }
 
+        /* Button hover effect */
         .store-button:hover {
             transform: scale(1.02);
         }
 
+        /* Disabled button style */
         .store-button:disabled {
             cursor: default;
         }
 
+        /* Style for focused button */
         .store-button:-moz-focusring {
             outline: auto;
         }
@@ -87,10 +93,12 @@
             vertical-align: middle;
         }
 
+        /* Hide elements with hidden attribute */
         .store-button [hidden] {
             display: none;
         }
 
+        /* Reset button styles for border and overflow handling */
         .store-button {
             border: .1vh solid;
             display: block;
@@ -98,23 +106,24 @@
             padding: 2vh 5vw;
             position: relative;
             text-align: center;
-
         }
 
+        /* New and old text inside button */
         .store-button .new,
         .store-button .old span {
             font-weight: 900;
             transition: transform 0.2s;
         }
 
+        /* New text positioned and initially scaled down */
         .store-button .new {
             position: absolute;
             left: 30%;
             top: 20%;
             transform: scale(0);
-
         }
 
+        /* Scale up new text on hover */
         .store-button:hover .new {
             position: absolute;
             left: 30%;
@@ -122,12 +131,14 @@
             transform: scale(1);
         }
 
+        /* Old text positioning */
         .store-button .old,
         .store-button .old span {
             inset: 0;
             position: absolute;
         }
 
+        /* Styling for old text with background color and centering */
         .store-button .old span {
             background: #000;
             color: #fff;
@@ -136,16 +147,19 @@
             place-items: center;
         }
 
+        /* Clip-path effect for the first old text span */
         .store-button .old span:first-child {
             -webkit-clip-path: polygon(0 0, 51% 0, 51% 100%, 0 100%);
             clip-path: polygon(0 0, 51% 0, 51% 100%, 0 100%);
         }
 
+        /* Clip-path effect for the second old text span */
         .store-button .old span:nth-child(2) {
             -webkit-clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
             clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
         }
 
+        /* Move old text out of view on hover */
         .store-button:hover .old span:first-child {
             transform: translateY(-100%);
         }
@@ -154,6 +168,7 @@
             transform: translateY(100%);
         }
 
+        /* Points counter styling */
         .points-counter {
             position: absolute;
             top: 80%;
@@ -163,6 +178,7 @@
             color: white;
         }
 
+        /* Full-screen transparent square background */
         .square1 {
             position: absolute;
             top: 0%;
@@ -171,6 +187,7 @@
             height: 100vh;
         }
 
+        /* Main square style */
         .square {
             position: absolute;
             left: 72%;
@@ -191,15 +208,14 @@
             text-align: center;
         }
 
+        /* Hover effect for square */
         .square:hover {
             transform: scale(1.01);
-            /* Slightly enlarges on hover for interactivity */
             background-color: #f0f0f0;
-            /* Light grey background on hover */
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-            /* More intense shadow on hover */
         }
 
+        /* Special styling for square with ID square3 */
         #square3 {
             top: 12%;
             height: 10vh;
@@ -209,15 +225,19 @@
 </head>
 
 <body>
+    <!-- Background square element -->
     <div class="square1"></div>
+    <!-- Main square element -->
     <div class="square"></div>
-    <div class="square" id="square3">
-
-    </div>
+    <!-- Square with special ID -->
+    <div class="square" id="square3"></div>
+    <!-- Points counter displayed on the page -->
     <div class="points-counter">
-        Points: <span id="points">300</span>
+        Points: <span id="points">400</span>
     </div>
-    <div class="store-container">
+    <!-- Container for store buttons -->
+    <div class="store-buttons">
+        <!-- Store button with text transition -->
         <button class="store-button" onclick="deductPoints()">
             <div class="new">Select?</div>
             <div class="old">
@@ -225,6 +245,7 @@
                 <span>Oreos</span>
             </div>
         </button>
+        <!-- Additional store buttons with similar structure -->
         <button class="store-button" onclick="deductPoints()">
             <div class="new">Select?</div>
             <div class="old">
@@ -258,7 +279,7 @@
         </button>
     </div>
 
-
+    <!-- JavaScript function to deduct points when a button is clicked -->
     <script>
         var points = 300;
 
