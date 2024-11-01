@@ -38,14 +38,37 @@ The primary purpose of this project is to create an interactive reward system fo
 
 ## How to Run the Project
 
-1. Clone the repository or download the project files.
-2. Open the `login.html` file in your web browser to start the application.
-3. Use the following credentials to log in:
-   - **Username:** `user123`
-   - **Password:** `password123`
-4. After logging in, you will be redirected to the store page where you can redeem your points for snacks.
+### Clone the Repository
+
+git clone https://github.com/agnasa06/arnav.vending_machine.github.io.git
+cd arnav.vending_machine.github.io
+
+Install Dependencies:
+Ensure you have Node.js installed. Run the following command to install dependencies:
+
+npm install
+
+Set Up Firebase:
+Create a Firebase project and obtain your configuration settings.
+Replace the placeholder in the firebaseConfig object in your code with your actual Firebase project settings.
+
+Run the Development Server:
+Use the following command to start the development server:
+
+npm run dev
+
+Open in Browser:
+Navigate to http://localhost:5173 (or the specified port) to view the application in your browser.
+
+Description of Core Features
+User Authentication: Users can log in using Google Sign-In. After logging in, their points are fetched from Firestore.
+Product Selection: Users can select snacks from the available products, and the total cost is calculated dynamically.
+Purchase Functionality: Users can purchase selected snacks using their points, which are deducted from their available balance.
+Real-Time Updates: Changes in user points and purchases are updated in real-time through Firestore.
 
 ## Technologies Used
 
 - **HTML/CSS:** For structuring and styling the web pages.
 - **JavaScript:** For handling login validation and points deduction functionality.
+
+
