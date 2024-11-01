@@ -2,275 +2,460 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Store Page</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            width: 100vw;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: transparent;
-            background-image: url('https://cdn.dribbble.com/users/504316/screenshots/20258850/34763_smokefree_vet_quit_forgood_vendingmachine_600x800.gif');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Page</title>
+  <style>
+    /* Body styles to center content and set background */
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: transparent;
+      background-image: url('https://cdn.dribbble.com/users/504316/screenshots/20258850/34763_smokefree_vet_quit_forgood_vendingmachine_600x800.gif');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
 
-        .store-container {
-            position: absolute;
-            left: 10%;
-            top: 8%;
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: 5vw;
-            row-gap: 8vh;
-            margin-bottom: 50px;
-        }
+    /* Grid layout for buttons */
+    .store-buttons {
+      position: absolute;
+      left: 10%;
+      top: 8%;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 5vw;
+      row-gap: 8vh;
+      margin-bottom: 50px;
+    }
 
-        .store-button,
-        .store-button *,
-        .store-button :after,
-        .store-button :before,
-        .store-button:after,
-        .store-button:before {
-            border: 0 solid;
-            box-sizing: border-box;
-        }
+    /* General button styles */
+    .store-button,
+    .store-button *,
+    .store-button :after,
+    .store-button :before,
+    .store-button:after,
+    .store-button:before {
+      border: 0 solid;
+      box-sizing: border-box;
+    }
 
-        .store-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 7vh;
-            width: 10vw;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-appearance: button;
-            background-color: #cecece;
-            background-image: none;
-            color: #000;
-            cursor: pointer;
-            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-                Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
-                Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-            font-size: calc(0.8vw + 0.8vh);
-            font-weight: 900;
-            line-height: 1.5;
-            margin: 0;
-            -webkit-mask-image: -webkit-radial-gradient(#cecece, #000);
-            padding: 0;
-            border-radius: 10px;
-            border: .1vh solid;
-            transition: transform 0.1s;
-        }
+    .store-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 7vh;
+      width: 10vw;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-appearance: button;
+      background-color: #cecece;
+      background-image: none;
+      color: #000;
+      cursor: pointer;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+        Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+      font-size: calc(0.8vw + 0.8vh);
+      font-weight: 900;
+      line-height: 1.5;
+      margin: 0;
+      -webkit-mask-image: -webkit-radial-gradient(#cecece, #000);
+      padding: 0;
+      border-radius: 10px;
+      border: .1vh solid;
+      transition: transform 0.1s;
+    }
 
-        .store-button:hover {
-            transform: scale(1.02);
-        }
+    /* Button hover effect */
+    .store-button:hover {
+      transform: scale(1.02);
+    }
 
-        .store-button:disabled {
-            cursor: default;
-        }
+    /* Disabled button style */
+    .store-button:disabled {
+      cursor: default;
+    }
 
-        .store-button:-moz-focusring {
-            outline: auto;
-        }
+    /* Style for focused button */
+    .store-button:-moz-focusring {
+      outline: auto;
+    }
 
-        .store-button svg {
-            display: block;
-            vertical-align: middle;
-        }
+    .store-button svg {
+      display: block;
+      vertical-align: middle;
+    }
 
-        .store-button [hidden] {
-            display: none;
-        }
+    /* Hide elements with hidden attribute */
+    .store-button [hidden] {
+      display: none;
+    }
 
-        .store-button {
-            border: .1vh solid;
-            display: block;
-            overflow: hidden;
-            padding: 2vh 5vw;
-            position: relative;
-            text-align: center;
+    /* Reset button styles for border and overflow handling */
+    .store-button {
+      border: .1vh solid;
+      display: block;
+      overflow: hidden;
+      padding: 2vh 5vw;
+      position: relative;
+      text-align: center;
+    }
 
-        }
+    /* New and old text inside button */
+    .store-button .new,
+    .store-button .old span {
+      font-weight: 900;
+      transition: transform 0.2s;
+    }
 
-        .store-button .new,
-        .store-button .old span {
-            font-weight: 900;
-            transition: transform 0.2s;
-        }
+    /* New text positioned and initially scaled down */
+    .store-button .new {
+      position: absolute;
+      left: 30%;
+      top: 20%;
+      transform: scale(0);
+    }
 
-        .store-button .new {
-            position: absolute;
-            left: 30%;
-            top: 20%;
-            transform: scale(0);
+    /* Scale up new text on hover */
+    .store-button:hover .new {
+      position: absolute;
+      left: 30%;
+      top: 20%;
+      transform: scale(1);
+    }
 
-        }
+    /* Old text positioning */
+    .store-button .old,
+    .store-button .old span {
+      inset: 0;
+      position: absolute;
+    }
 
-        .store-button:hover .new {
-            position: absolute;
-            left: 30%;
-            top: 20%;
-            transform: scale(1);
-        }
+    /* Styling for old text with background color and centering */
+    .store-button .old span {
+      background: #000;
+      color: #fff;
+      display: block;
+      display: grid;
+      place-items: center;
+    }
 
-        .store-button .old,
-        .store-button .old span {
-            inset: 0;
-            position: absolute;
-        }
+    /* Clip-path effect for the first old text span */
+    .store-button .old span:first-child {
+      -webkit-clip-path: polygon(0 0, 51% 0, 51% 100%, 0 100%);
+      clip-path: polygon(0 0, 51% 0, 51% 100%, 0 100%);
+    }
 
-        .store-button .old span {
-            background: #000;
-            color: #fff;
-            display: block;
-            display: grid;
-            place-items: center;
-        }
+    /* Clip-path effect for the second old text span */
+    .store-button .old span:nth-child(2) {
+      -webkit-clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+      clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    }
 
-        .store-button .old span:first-child {
-            -webkit-clip-path: polygon(0 0, 51% 0, 51% 100%, 0 100%);
-            clip-path: polygon(0 0, 51% 0, 51% 100%, 0 100%);
-        }
+    /* Move old text out of view on hover */
+    .store-button:hover .old span:first-child {
+      transform: translateY(-100%);
+    }
 
-        .store-button .old span:nth-child(2) {
-            -webkit-clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
-            clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
-        }
+    .store-button:hover .old span:nth-child(2) {
+      transform: translateY(100%);
+    }
 
-        .store-button:hover .old span:first-child {
-            transform: translateY(-100%);
-        }
+    /* Full-screen transparent square background */
+    .square1 {
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      width: 100vw;
+      height: 100vh;
+    }
 
-        .store-button:hover .old span:nth-child(2) {
-            transform: translateY(100%);
-        }
+    /* Main square style */
+    .square {
+      position: absolute;
+      left: 72%;
+      top: 21%;
+      height: 60vh;
+      width: 25vw;
+      background-color: #ffffff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      border: 2px solid #3498db;
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Arial', sans-serif;
+      color: #333333;
+      font-size: 24px;
+      text-align: center;
+    }
 
-        .points-counter {
-            position: absolute;
-            top: 80%;
-            left: 50%;
-            font-size: 4vh;
-            font-weight: bold;
-            color: white;
-        }
+    /* Hover effect for square */
+    .square:hover {
+      background-color: hsl(0, 0%, 97%);
+      transform: scale(1.01);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
 
-        .square1 {
-            position: absolute;
-            top: 0%;
-            left: 0%;
-            width: 100vw;
-            height: 100vh;
-        }
+    /* Special styling for square with ID square3 */
+    #square3 {
+      top: 10%;
+      height: 10vh;
+      border: 2px solid #000000;
+      background-image: url("https://img.freepik.com/free-vector/abstract-shiny-grey-technology-background_1035-12620.jpg");
+      background-position: center bottom;
+      font-family: 'Arial', sans-serif;
+      /* Font style */
+      font-size: calc(1.8vw + 1.8vh);
+      color: #FFFFFF;
+      text-align: center;
+      font-weight: bold;
+      line-height: 10vh;
+    }
 
-        .square {
-            position: absolute;
-            left: 72%;
-            top: 23%;
-            height: 65vh;
-            width: 25vw;
-            background-color: #ffffff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            border: 2px solid #3498db;
-            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Arial', sans-serif;
-            color: #333333;
-            font-size: 24px;
-            text-align: center;
-        }
+    #square3 p {
+      display: inline-block;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      margin: 0;
+      text-align: center;
+      -webkit-text-stroke: 1.2 px #000000;
 
-        .square:hover {
-            transform: scale(1.01);
-            /* Slightly enlarges on hover for interactivity */
-            background-color: #f0f0f0;
-            /* Light grey background on hover */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-            /* More intense shadow on hover */
-        }
+    }
 
-        #square3 {
-            top: 12%;
-            height: 10vh;
-            border: 2px solid #0060a0;
-        }
-    </style>
+    #square4 {
+      top: 5%;
+      left: 35%;
+      height: 15vh;
+      border: 2px solid black;
+    }
+
+    #censor {
+      position: absolute;
+      top: 41%;
+      left: 63.7%;
+      height: 4vh;
+      width: 3.5vw;
+      background-color: #EEEEEE;
+      filter: blur(2px);
+    }
+
+    #censor2 {
+      position: absolute;
+      top: 6%;
+      left: 34%;
+      height: 6vh;
+      width: 26vw;
+      background-color: #BF4C46;
+      filter: blur(2px);
+    }
+
+    /* Style updates for the snack list container */
+    .snack-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      max-height: 60vh;
+      /* Set maximum height to make the list scrollable */
+      overflow-y: auto;
+      /* Enable vertical scrolling */
+      width: 100%;
+      /* Make sure the list takes the full width of the container */
+    }
+
+    /* Style each list item */
+    .snack-list li {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border-bottom: 1px solid #ccc;
+      justify-content: space-between;
+      /* Space between content and delete button */
+    }
+
+    /* Style the images in the list */
+    .snack-list img {
+      width: 80px;
+      height: 80px;
+      margin-right: 10px;
+      object-fit: contain;
+    }
+
+    /* Flexbox layout for the details, aligned to the left */
+    .snack-details {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      /* Align text closer to the left */
+      width: 70%;
+      /* Adjust width to leave room for the delete button */
+    }
+
+    /* Style for product name */
+    .snack-details strong {
+      font-size: 1.2em;
+      color: #333;
+      text-align: left;
+      /* Left-align the text */
+    }
+
+    /* Style for points */
+    .snack-details small {
+      font-size: 0.9em;
+      color: #777;
+      text-align: left;
+      /* Left-align the points text */
+    }
+
+    /* Style for the delete button */
+    .delete-btn {
+      background-color: transparent;
+      border: none;
+      color: red;
+      font-size: 1.2em;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .delete-btn:hover {
+      color: darkred;
+    }
+
+    #pointsSquare {
+      position: absolute;
+      /* Ensures the button is positioned relative to the nearest positioned ancestor */
+      top: 85%;
+      /* Position at the bottom of the screen */
+      left: 35%;
+      /* Center horizontally */
+      width: 25vw;
+      /* Set width relative to the viewport */
+      height: 10vh;
+      /* Set height relative to the viewport */
+      background-color: #FFFFFF;
+      /* Background color */
+      border: 2px solid #000000;
+      /* Border styling */
+      border-radius: 15px;
+      /* Rounded corners */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      /* Shadow effect */
+      display: flex;
+      /* Flexbox layout */
+      align-items: center;
+      /* Center content vertically */
+      justify-content: center;
+      /* Center content horizontally */
+      font-family: 'Arial', sans-serif;
+      /* Font style */
+      font-size: calc(1.8vw + 1.8vh);
+      /* Responsive font size */
+      color: #333333;
+      /* Text color */
+      text-align: center;
+      /* Center text */
+      font-weight: bold;
+      /* Make text bold */
+      line-height: 10vh;
+      /* Line height for vertical centering */
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+      /* Transition effects */
+    }
+
+    /* Hover effect (optional, can be added if you want to enhance interactivity) */
+    #pointsSquare:hover {
+      background-color: hsl(0, 0%, 97%);
+      /* Lighten background on hover */
+      transform: scale(1.01);
+      /* Slightly scale up */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      /* Enhance shadow on hover */
+    }
+
+    #purchaseBtn {
+      top: 82%;
+      height: 10vh;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="square1"></div>
-    <div class="square"></div>
-    <div class="square" id="square3">
 
-    </div>
-    <div class="points-counter">
-        Points: <span id="points">300</span>
-    </div>
-    <div class="store-container">
-        <button class="store-button" onclick="deductPoints()">
-            <div class="new">Select?</div>
-            <div class="old">
-                <span>Oreos</span>
-                <span>Oreos</span>
-            </div>
-        </button>
-        <button class="store-button" onclick="deductPoints()">
-            <div class="new">Select?</div>
-            <div class="old">
-                <span>Doritoes</span>
-                <span>Doritoes</span>
-            </div>
-        </button><button class="store-button" onclick="deductPoints()">
-            <div class="new">Select?</div>
-            <div class="old">
-                <span>Chips Ahoy</span>
-                <span>Chips Ahoy</span>
-            </div>
-        </button><button class="store-button" onclick="deductPoints()">
-            <div class="new">Select?</div>
-            <div class="old">
-                <span>Cheetos</span>
-                <span>Cheetos</span>
-            </div>
-        </button><button class="store-button" onclick="deductPoints()">
-            <div class="new">Select?</div>
-            <div class="old">
-                <span>Cheez It</span>
-                <span>Cheez It</span>
-            </div>
-        </button><button class="store-button" onclick="deductPoints()">
-            <div class="new">Select?</div>
-            <div class="old">
-                <span>Sanity from coding HTML</span>
-                <span>Sanity from coding HTML</span>
-            </div>
-        </button>
-    </div>
+  <!-- Main square element -->
+  <div class="square" id="snack-image">
+    <ul class="snack-list">
+    </ul>
+  </div>
 
+  <!-- Square with special ID -->
+  <div class="square" id="square3">
+    <p>Cost: <span id="totalCost">0</span> Points</p>
+  </div>
 
-    <script>
-        var points = 300;
+  <div id="censor"></div>
+  <div id="censor2"></div>
 
-        function deductPoints() {
-            if (points >= 50) {
-                points -= 50;
-                document.getElementById('points').textContent = points;
-            } else {
-                alert("Not enough points!");
-            }
-        }
-    </script>
+  <!-- Points counter displayed on the page -->
+  <div id="pointsSquare">
+    <p style="color: black"><span id="points">0</span></p>
+  </div>
+
+  <!-- Container for store buttons -->
+  <div class="store-buttons">
+    <!-- Store button with text transition -->
+    <button class="store-button" onclick="addProductToList('Oreos')">
+      <div class="new">Select?</div>
+      <div class="old">
+        <span>Oreos</span>
+        <span>Oreos</span>
+      </div>
+    </button>
+    <!-- Additional store buttons with similar structure -->
+    <button class="store-button" onclick="addProductToList('Doritos')">
+      <div class="new">Select?</div>
+      <div class="old">
+        <span>Doritoes</span>
+        <span>Doritoes</span>
+      </div>
+    </button><button class="store-button" onclick="addProductToList('Chips Ahoy')">
+      <div class="new">Select?</div>
+      <div class="old">
+        <span>Chips Ahoy</span>
+        <span>Chips Ahoy</span>
+      </div>
+    </button><button class="store-button" onclick="addProductToList('Cheetos')">
+      <div class="new">Select?</div>
+      <div class="old">
+        <span>Cheetos</span>
+        <span>Cheetos</span>
+      </div>
+    </button><button class="store-button" onclick="addProductToList('Cheez It')">
+      <div class="new">Select?</div>
+      <div class="old">
+        <span>Cheez It</span>
+        <span>Cheez It</span>
+      </div>
+    </button></button><button class="store-button" onclick="addProductToList('Pringles')">
+      <div class="new">Select?</div>
+      <div class="old">
+        <span>Pringles</span>
+        <span>Pringles</span>
+      </div>
+  </div>
+
+  <div class="square" id="purchaseBtn" style="background-color: blue; color: white;">
+    <p>Purchase</p>
+  </div>
+
+  <!-- JavaScript function to deduct points when a button is clicked -->
+  <script type="module" src="/src/store.ts"></script>
 </body>
 
 </html>
