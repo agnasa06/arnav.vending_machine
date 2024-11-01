@@ -1,10 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login Page</title>
+
   <style>
     body {
       display: flex;
@@ -45,10 +47,21 @@
       color: white;
       font-size: 16px;
       cursor: pointer;
+      margin-top: 10px;
     }
 
     .login-container button:hover {
       background-color: #45a049;
+    }
+
+    #googleSignInBtn {
+      background-color: #4285F4;
+      color: white;
+      margin-top: 10px;
+    }
+
+    #googleSignInBtn:hover {
+      background-color: #357ae8;
     }
 
     .error-message {
@@ -61,30 +74,16 @@
 </head>
 
 <body>
+  <div id="app"></div>
   <div class="login-container">
     <h2>Login</h2>
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
     <button onclick="validate()">Login</button>
+    <button id="googleSignInBtn">Sign in with Google</button>
     <div class="error-message" id="error-message">Invalid username or password</div>
   </div>
-
-  <script>
-    function validate() {
-      var username = document.getElementById('username').value;
-      var password = document.getElementById('password').value;
-
-      // Define correct credentials
-      var correctUsername = "user123";
-      var correctPassword = "password123";
-
-      if (username === correctUsername && password === correctPassword) {
-        window.location.href = "store.html"; // Redirect to another page
-      } else {
-        document.getElementById('error-message').style.display = 'block';
-      }
-    }
-  </script>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 
 </html>
