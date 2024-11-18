@@ -1,4 +1,4 @@
-# https://agnasa06.github.io/arnav.vending_machine.github.io/
+# https://agnasa06.github.io/arnav.vending_machine/
 The website for the vending machine
 
 # Classroom Vending Machine
