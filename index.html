@@ -76,27 +76,12 @@
     <h2>Login</h2>
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
-    <button onclick="validate()">Login</button>
+    <button>Login</button>
     <button id="googleSignInBtn">Sign in with Google</button>
     <div class="error-message" id="error-message">Invalid username or password</div>
   </div>
 
-  <script>
-    function validate() {
-      var username = document.getElementById('username').value;
-      var password = document.getElementById('password').value;
-
-      // Define correct credentials
-      var correctUsername = "user123";
-      var correctPassword = "password123";
-
-      if (username === correctUsername && password === correctPassword) {
-        window.location.href = "store.html"; // Redirect to another page
-      } else {
-        document.getElementById('error-message').style.display = 'block';
-      }
-    }
-  </script>
+  <script type="module" src="/dist/main.js"></script>
 </body>
 
 </html>
