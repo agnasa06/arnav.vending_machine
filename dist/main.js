@@ -1,10 +1,5 @@
-import { initializeApp } from "firebase/app"
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  onAuthStateChanged
-} from "firebase/auth"
+import { initializeApp } from 'firebase/app';
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 
 // Your Firebase configuration object
 const firebaseConfig = {
@@ -15,50 +10,53 @@ const firebaseConfig = {
   messagingSenderId: "257322753923",
   appId: "1:257322753923:web:58f04bcaa77452d151a0b6",
   measurementId: "G-PS5QTFZ8HJ"
-}
+};
 
 // Initialize Firebase app and auth
-const app = initializeApp(firebaseConfig)
-const auth = getAuth(app)
-const button = document.getElementById("googleSignInBtn")
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const button = document.getElementById('googleSignInBtn');
 
 // Handle sign-in with Google
-button?.addEventListener("click", () => {
-  signInWithPopup(auth, new GoogleAuthProvider())
-    .then(result => {
-      console.log("User signed in:", result.user)
-      window.location.href = "store.html" // Redirect to store page on successful sign-in
-    })
-    .catch(error => {
-      console.error("Error during sign-in:", error.message)
-    })
-})
+if (button) {
+  button.addEventListener('click', () => {
+    signInWithPopup(auth, new GoogleAuthProvider())
+      .then((result) => {
+        console.log('User signed in:', result.user);
+        window.location.href = "store.html"; // Redirect to store page on successful sign-in
+      })
+      .catch((error) => {
+        console.error('Error during sign-in:', error.message);
+      });
+  });
+}
 
 // Listen for authentication state changes
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("User authenticated:", user)
+    console.log('User authenticated:', user);
   } else {
-    console.log("User not authenticated")
+    console.log('User not authenticated');
   }
-})
+});
 
 // Define the validate function and attach it to the global `window` object
 function validate() {
-  const username = document.getElementById("username").value
-  const password = document.getElementById("password").value
-  const errorMessage = document.getElementById("error-message")
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const errorMessage = document.getElementById('error-message');
 
   // Define correct credentials
-  const correctUsername = "user123"
-  const correctPassword = "password123"
+  const correctUsername = "user123";
+  const correctPassword = "password123";
 
   if (username === correctUsername && password === correctPassword) {
-    window.location.href = "store.html" // Redirect to another page
+    window.location.href = "store.html"; // Redirect to another page
   } else if (errorMessage) {
-    errorMessage.style.display = "block"
+    errorMessage.style.display = 'block';
   }
 }
 
 // Attach the validate function to the window object
-window.validate = validate
+window.validate = validate;
+
