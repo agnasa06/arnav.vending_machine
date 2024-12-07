@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // Use the latest JavaScript features
+    "module": "ESNext", // Output as ES Modules
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "skipLibCheck": true, // Skip type checking of all declaration files
+    "moduleResolution": "node", // Resolve modules like Node.js
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true, // Enforce strict module boundaries
+    "moduleDetection": "force", // Force module detection
+    "noEmit": false, // Allow emitting files (set to false to emit JS)
+    "esModuleInterop": true, // Enable compatibility with CommonJS modules
+    "resolveJsonModule": true, // Enable importing JSON files as modules
+    "strict": true, // Enable strict type-checking
+    "noUnusedLocals": true, // No unused locals
+    "noUnusedParameters": true, // No unused parameters
+    "noFallthroughCasesInSwitch": true, // Disallow fallthrough in switch statements
+    "outDir": "./dist", // Specify the output directory for compiled files
+    "declaration": true, // Generate declaration files (.d.ts)
+    "sourceMap": true // Generate source maps for debugging
+  },
+  "include": [
+    "src/**/*" // Include all files in the src folder
+  ]
+}
