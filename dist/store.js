@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, onSnapshot, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, getRedirectResult } from 'firebase/auth';
@@ -33,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Step 2: Check redirect result
     getRedirectResult(auth)
         .then((result) => {
-        if (result === null || result === void 0 ? void 0 : result.user) {
+        if (result?.user) {
             console.log('User signed in through redirect:', result.user);
             handleUserLogin(result.user);
         }
@@ -45,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch((error) => {
         console.error('Error handling redirect:', error.message);
     });
-    button === null || button === void 0 ? void 0 : button.addEventListener('click', _ => {
+    button?.addEventListener('click', _ => {
         console.log('Sign-in button clicked');
         signInWithPopup(auth, new GoogleAuthProvider());
     });
@@ -59,34 +50,32 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(user);
         }
     });
-    function handleUserLogin(user) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { uid, displayName, email } = user;
-            currentUserId = uid; // Store user ID
-            // Reference to the user's document in Firestore
-            const userDocRef = doc(db, `users`, uid);
-            // Check if the user document already exists
-            const userDocSnap = yield getDoc(userDocRef);
-            if (!userDocSnap.exists()) {
-                // User is new, so create a new document with initial points of 40
-                yield setDoc(userDocRef, {
-                    points: 0,
-                    name: displayName,
-                    email: email,
-                    createdAt: new Date(),
-                });
-                console.log('New user document created with 0 points');
-                displayPoints(0); // Display initial points
-            }
-            else {
-                const userData = userDocSnap.data();
-                availablePoints = userData.points || 0; // Set availablePoints from Firestore
-                console.log('User points retrieved:', availablePoints);
-                displayPoints(availablePoints); // Update UI with user's points
-            }
-            const expensesCol = collection(db, `users/${uid}/expenses`);
-            createStream(expensesCol);
-        });
+    async function handleUserLogin(user) {
+        const { uid, displayName, email } = user;
+        currentUserId = uid; // Store user ID
+        // Reference to the user's document in Firestore
+        const userDocRef = doc(db, `users`, uid);
+        // Check if the user document already exists
+        const userDocSnap = await getDoc(userDocRef);
+        if (!userDocSnap.exists()) {
+            // User is new, so create a new document with initial points of 40
+            await setDoc(userDocRef, {
+                points: 0,
+                name: displayName,
+                email: email,
+                createdAt: new Date(),
+            });
+            console.log('New user document created with 0 points');
+            displayPoints(0); // Display initial points
+        }
+        else {
+            const userData = userDocSnap.data();
+            availablePoints = userData.points || 0; // Set availablePoints from Firestore
+            console.log('User points retrieved:', availablePoints);
+            displayPoints(availablePoints); // Update UI with user's points
+        }
+        const expensesCol = collection(db, `users/${uid}/expenses`);
+        createStream(expensesCol);
     }
     // Function to display points on the UI
     function displayPoints(points) {
@@ -105,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             expenses.forEach(expense => {
                 const li = document.createElement('li');
                 li.textContent = `${expense.name} - ${expense.points}`;
-                ul === null || ul === void 0 ? void 0 : ul.appendChild(li);
+                ul?.appendChild(li);
             });
         });
     }
@@ -140,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalCostDisplay = document.getElementById('totalCost');
     const purchaseButton = document.getElementById('purchaseBtn');
     function addProductToList(productName) {
-        var _a;
         const product = productLookup[productName];
         if (!product)
             return;
@@ -149,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ul) {
             ul = document.createElement('ul');
             ul.classList.add('snack-list');
-            snackImageDiv === null || snackImageDiv === void 0 ? void 0 : snackImageDiv.appendChild(ul);
+            snackImageDiv?.appendChild(ul);
         }
         // Create li element with product details
         const li = document.createElement('li');
@@ -162,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <button class="delete-btn">X</button>
     `;
         // Add event listener for the delete button
-        (_a = li.querySelector('.delete-btn')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
+        li.querySelector('.delete-btn')?.addEventListener('click', () => {
             ul.removeChild(li);
             calculateTotalCost();
         });
@@ -182,33 +170,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         totalCostDisplay.textContent = totalCost.toString();
     }
-    function deductPoints(userId, pointsToDeduct) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            const db = getFirestore();
-            const userRef = doc(db, 'users', userId); // Reference to the user's document
-            // Get the current points of the user
-            const userDoc = yield getDoc(userRef);
-            if (userDoc.exists()) {
-                const currentPoints = ((_a = userDoc.data()) === null || _a === void 0 ? void 0 : _a.points) || 0;
-                // Check if the user has enough points
-                if (currentPoints >= pointsToDeduct) {
-                    const newPoints = currentPoints - pointsToDeduct;
-                    // Update the points in the database
-                    yield updateDoc(userRef, { points: newPoints });
-                    console.log(`Deducted ${pointsToDeduct} points. New balance: ${newPoints}`);
-                    return newPoints; // Return new points for UI update
-                }
-                else {
-                    console.error('Insufficient points for this transaction.');
-                    return null; // Not enough points
-                }
+    async function deductPoints(userId, pointsToDeduct) {
+        const db = getFirestore();
+        const userRef = doc(db, 'users', userId); // Reference to the user's document
+        // Get the current points of the user
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+            const currentPoints = userDoc.data()?.points || 0;
+            // Check if the user has enough points
+            if (currentPoints >= pointsToDeduct) {
+                const newPoints = currentPoints - pointsToDeduct;
+                // Update the points in the database
+                await updateDoc(userRef, { points: newPoints });
+                console.log(`Deducted ${pointsToDeduct} points. New balance: ${newPoints}`);
+                return newPoints; // Return new points for UI update
             }
             else {
-                console.error('User does not exist.');
-                return null; // User not found
+                console.error('Insufficient points for this transaction.');
+                return null; // Not enough points
             }
-        });
+        }
+        else {
+            console.error('User does not exist.');
+            return null; // User not found
+        }
     }
     function purchaseItems() {
         const totalCost = parseInt(totalCostDisplay.textContent || '0');
@@ -239,6 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-    purchaseButton === null || purchaseButton === void 0 ? void 0 : purchaseButton.addEventListener('click', purchaseItems);
+    purchaseButton?.addEventListener('click', purchaseItems);
 });
 //# sourceMappingURL=store.js.map

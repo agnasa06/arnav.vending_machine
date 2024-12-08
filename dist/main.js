@@ -15,7 +15,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const button = document.getElementById('googleSignInBtn');
 // Handle sign-in with Google
-button === null || button === void 0 ? void 0 : button.addEventListener('click', () => {
+button?.addEventListener('click', () => {
     signInWithPopup(auth, new GoogleAuthProvider())
         .then((result) => {
         console.log('User signed in:', result.user);
