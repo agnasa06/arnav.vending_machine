@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ESNext", // Use the latest JavaScript features
-    "module": "ESNext", // Output as ES Modules
+    "target": "es6", // Use the latest JavaScript features
+    "module": "esnext", // Output as ES Modules
     "lib": [
       "ESNext",
       "DOM",
@@ -9,7 +9,6 @@
     ],
     "skipLibCheck": true, // Skip type checking of all declaration files
     "moduleResolution": "node", // Resolve modules like Node.js
-    "allowImportingTsExtensions": true,
     "isolatedModules": true, // Enforce strict module boundaries
     "moduleDetection": "force", // Force module detection
     "noEmit": false, // Allow emitting files (set to false to emit JS)

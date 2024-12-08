@@ -2,6 +2,12 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, onSnapshot, CollectionReference, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, getRedirectResult, User } from 'firebase/auth';
 
+declare global {
+  interface Window {
+    addProductToList?: any;
+  }
+}
+
 // Your Firebase configuration object
 const firebaseConfig = {
   apiKey: "AIzaSyCnOb76ITddk6PFhMAdCs5RgYFtS9DXq3Y",
@@ -41,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error handling redirect:', error.message);
     });
 
-  button?.addEventListener('click', clickEvent => {
+  button?.addEventListener('click', _ => {
     console.log('Sign-in button clicked');
     signInWithPopup(auth, new GoogleAuthProvider());
   });
@@ -178,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     calculateTotalCost();
   }
 
-  window.addProductToList = addProductToList;
+  window["addProductToList"] = addProductToList;
 
   function calculateTotalCost() {
     const listItems = document.querySelectorAll('.snack-list li');
@@ -186,8 +192,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     listItems.forEach(item => {
       const pointsText = (item.querySelector('.snack-details small') as HTMLElement).textContent;
-      const points = parseInt(pointsText.replace(' Points', ''));
-      totalCost += points;
+      if (pointsText) {
+        const points = parseInt(pointsText.replace(' Points', ''));
+        totalCost += points;
+      }
     });
 
     totalCostDisplay!.textContent = totalCost.toString();
