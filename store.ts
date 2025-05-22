@@ -230,8 +230,9 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(`Deducted ${pointsToDeduct} points. New balance: ${newPoints}`);
   
       // Send dispense commands for Oreos
+      console.log(orderedProducts.length);
       for (const snack of orderedProducts) {
-        console.log('reached')
+        console.log('reached');
         if (snack === "Oreos") {
           try {
             await fetch("http://172.20.10.7/dispense", {
