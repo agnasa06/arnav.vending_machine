@@ -231,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
       // Send dispense commands for Oreos
       for (const snack of orderedProducts) {
+        console.log('reached')
         if (snack === "Oreos") {
           try {
             await fetch("http://172.20.10.7/dispense", {
