@@ -251,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
           setTimeout(() => (purchaseButton!.textContent = "Purchase"), 1000);
   
           // Dispense snacks
+          console.log('reached');
           for (const snack of orderedProducts) {
             if (snack === "Oreos") {
               try {
