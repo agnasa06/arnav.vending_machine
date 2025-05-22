@@ -25,6 +25,7 @@
   "include": [
     "src/**/*" // Include all files in the src folder
     ,
-    "webpack.config.js"
+    "webpack.config.js",
+    "dist/main.js"
   ]
 }

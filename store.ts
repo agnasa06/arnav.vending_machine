@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!product) return;
 
     orderedProducts.push(productName);
-    
+
     // Create ul if it doesn't already exist
     let ul = document.querySelector('.snack-list') as HTMLUListElement;
     if (!ul) {
@@ -210,25 +210,25 @@ document.addEventListener('DOMContentLoaded', () => {
   async function deductPoints(userId: string, pointsToDeduct: number, orderedProducts: string[]) {
     const db = getFirestore();
     const userRef = doc(db, 'users', userId);
-  
+
     try {
       const userDoc = await getDoc(userRef);
       if (!userDoc.exists()) {
         console.error('User document not found.');
         return null;
       }
-  
+
       const currentPoints = userDoc.data()?.points || 0;
       if (currentPoints < pointsToDeduct) {
         console.warn('Insufficient points.');
         return null;
       }
-  
+
       // Deduct points in Firestore
       const newPoints = currentPoints - pointsToDeduct;
       await updateDoc(userRef, { points: newPoints });
-      console.log(`Deducted ${pointsToDeduct} points. New balance: ${newPoints}`);
-  
+      console.log(`Deducteeeed ${pointsToDeduct} points. New balance: ${newPoints}`);
+
       // Send dispense commands for Oreos
       console.log(orderedProducts.length);
       for (const snack of orderedProducts) {
@@ -246,10 +246,10 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       }
-  
+
       // Clear the order list
       orderedProducts.length = 0;
-  
+
       return newPoints;
     } catch (error) {
       console.error('Error in deductPoints:', error);
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
           pointsDisplay!.textContent = availablePoints.toString();
           purchaseButton!.textContent = "Success!";
           setTimeout(() => (purchaseButton!.textContent = "Purchase"), 1000);
-      
+
           // Clear the UI
           document.querySelector('.snack-list')!.innerHTML = "";
           totalCostDisplay!.textContent = "0";
