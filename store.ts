@@ -22,6 +22,7 @@ declare global {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 const button = document.getElementById('loginBtn');
+const orderedProducts: string[] = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   const userPointsDisplay = document.getElementById('points');
@@ -155,6 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const product = productLookup[productName];
     if (!product) return;
 
+    orderedProducts.push(productName);
+    
     // Create ul if it doesn't already exist
     let ul = document.querySelector('.snack-list') as HTMLUListElement;
     if (!ul) {
@@ -240,17 +243,33 @@ document.addEventListener('DOMContentLoaded', () => {
       purchaseButton!.textContent = "No items selected!";
       setTimeout(() => (purchaseButton!.textContent = "Purchase"), 1000);
     } else {
-      // Here we call the Firestore function to deduct points
-      deductPoints(currentUserId!, totalCost).then(newAvailablePoints => {
+      deductPoints(currentUserId!, totalCost).then(async newAvailablePoints => {
         if (newAvailablePoints !== null) {
-          availablePoints = newAvailablePoints; // Update available points in the UI
+          availablePoints = newAvailablePoints;
           pointsDisplay!.textContent = availablePoints.toString();
           purchaseButton!.textContent = "Success!";
           setTimeout(() => (purchaseButton!.textContent = "Purchase"), 1000);
-
-          // Clear the list and reset the total cost
+  
+          // Dispense snacks
+          for (const snack of orderedProducts) {
+            if (snack === "Oreos") {
+              try {
+                await fetch("http://172.20.10.7/dispense", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ item: snack }),
+                });
+                console.log(`Dispense command sent for ${snack}`);
+              } catch (err) {
+                console.error(`Failed to send command for ${snack}:`, err);
+              }
+            }
+          }
+  
+          // Clear the order list and reset total cost
           document.querySelector('.snack-list')!.innerHTML = "";
           totalCostDisplay!.textContent = "0";
+          orderedProducts.length = 0; // Clear the tracking array
         } else {
           purchaseButton!.textContent = "Transaction failed!";
           setTimeout(() => (purchaseButton!.textContent = "Purchase"), 1000);
