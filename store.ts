@@ -22,7 +22,7 @@ declare global {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 const button = document.getElementById('loginBtn');
-const orderedProducts: string[] = [];
+let orderedProducts: string[] = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   const userPointsDisplay = document.getElementById('points');
@@ -207,32 +207,54 @@ document.addEventListener('DOMContentLoaded', () => {
     totalCostDisplay!.textContent = totalCost.toString();
   }
 
-  async function deductPoints(userId: string, pointsToDeduct: number) {
+  async function deductPoints(userId: string, pointsToDeduct: number, orderedProducts: string[]) {
     const db = getFirestore();
-    const userRef = doc(db, 'users', userId); // Reference to the user's document
-
-    // Get the current points of the user
-    const userDoc = await getDoc(userRef);
-    if (userDoc.exists()) {
-      const currentPoints = userDoc.data()?.points || 0;
-
-      // Check if the user has enough points
-      if (currentPoints >= pointsToDeduct) {
-        const newPoints = currentPoints - pointsToDeduct;
-
-        // Update the points in the database
-        await updateDoc(userRef, { points: newPoints });
-        console.log(`Deducted ${pointsToDeduct} points. New balance: ${newPoints}`);
-        return newPoints; // Return new points for UI update
-      } else {
-        console.error('Insufficient points for this transaction.');
-        return null; // Not enough points
+    const userRef = doc(db, 'users', userId);
+  
+    try {
+      const userDoc = await getDoc(userRef);
+      if (!userDoc.exists()) {
+        console.error('User document not found.');
+        return null;
       }
-    } else {
-      console.error('User does not exist.');
-      return null; // User not found
+  
+      const currentPoints = userDoc.data()?.points || 0;
+      if (currentPoints < pointsToDeduct) {
+        console.warn('Insufficient points.');
+        return null;
+      }
+  
+      // Deduct points in Firestore
+      const newPoints = currentPoints - pointsToDeduct;
+      await updateDoc(userRef, { points: newPoints });
+      console.log(`Deducted ${pointsToDeduct} points. New balance: ${newPoints}`);
+  
+      // Send dispense commands for Oreos
+      for (const snack of orderedProducts) {
+        if (snack === "Oreos") {
+          try {
+            await fetch("http://172.20.10.7/dispense", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ item: snack }),
+            });
+            console.log(`Dispense command sent for ${snack}`);
+          } catch (err) {
+            console.error(`Failed to send command for ${snack}:`, err);
+          }
+        }
+      }
+  
+      // Clear the order list
+      orderedProducts.length = 0;
+  
+      return newPoints;
+    } catch (error) {
+      console.error('Error in deductPoints:', error);
+      return null;
     }
   }
+
 
   function purchaseItems() {
     const totalCost = parseInt(totalCostDisplay!.textContent || '0');
@@ -243,34 +265,16 @@ document.addEventListener('DOMContentLoaded', () => {
       purchaseButton!.textContent = "No items selected!";
       setTimeout(() => (purchaseButton!.textContent = "Purchase"), 1000);
     } else {
-      deductPoints(currentUserId!, totalCost).then(async newAvailablePoints => {
+      deductPoints(currentUserId!, totalCost, orderedProducts).then(async newAvailablePoints => {
         if (newAvailablePoints !== null) {
           availablePoints = newAvailablePoints;
           pointsDisplay!.textContent = availablePoints.toString();
           purchaseButton!.textContent = "Success!";
           setTimeout(() => (purchaseButton!.textContent = "Purchase"), 1000);
-  
-          // Dispense snacks
-          console.log('reached');
-          for (const snack of orderedProducts) {
-            if (snack === "Oreos") {
-              try {
-                await fetch("http://172.20.10.7/dispense", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ item: snack }),
-                });
-                console.log(`Dispense command sent for ${snack}`);
-              } catch (err) {
-                console.error(`Failed to send command for ${snack}:`, err);
-              }
-            }
-          }
-  
-          // Clear the order list and reset total cost
+      
+          // Clear the UI
           document.querySelector('.snack-list')!.innerHTML = "";
           totalCostDisplay!.textContent = "0";
-          orderedProducts.length = 0; // Clear the tracking array
         } else {
           purchaseButton!.textContent = "Transaction failed!";
           setTimeout(() => (purchaseButton!.textContent = "Purchase"), 1000);
